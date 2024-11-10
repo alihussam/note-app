@@ -13,6 +13,7 @@ export interface EnvConfig {
   PORT: number;
   ROUTE_PREFIX: string;
   JWT_SECRET: string;
+  PASSWORD_HASH_ROUNDS: number;
 }
 
 let envConfig: EnvConfig;
@@ -27,6 +28,7 @@ const envConfigValidation = Joi.object({
   PORT: Joi.number().required(),
   ROUTE_PREFIX: Joi.string().optional().default("/"),
   JWT_SECRET: Joi.string().required(),
+  PASSWORD_HASH_ROUNDS: Joi.number().default(10),
 }).unknown(true); // allow unknown keys
 
 /**

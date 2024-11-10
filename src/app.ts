@@ -6,9 +6,13 @@ import { notFoundMiddleware } from "./middleware/notFound.middleware";
 import { errorRequestMiddleware } from "./middleware/errorRequest.middleware";
 import { requestLoggerMiddleware } from "./middleware/requestLogger.middleware";
 import { getEnvConfig } from "./utils/env.utils";
+import { associateModels } from "./models/modelAssociations";
 
 // load config first
 const { ROUTE_PREFIX } = getEnvConfig();
+
+// associate all models
+associateModels();
 
 // create express app
 const app = express();
