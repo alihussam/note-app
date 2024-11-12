@@ -1,18 +1,17 @@
 import { NextFunction, Request, Response } from "express";
 import { sendSuccessResponse } from "../../../utils/response.utils";
 import { Note, NoteModel } from "../../../models/note.model";
-import { UpdateNoteRequest } from "./updateNote.types";
 import { CustomError } from "../../../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 
 /**
- * Update note controller
+ * Get note controller
  *
  * @param req - Request
  * @param res - Response
  * @param next - Next middlewarw
  */
-export const updateNoteController = async (
+export const getNoteController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -31,32 +30,11 @@ export const updateNoteController = async (
       throw new Error("Note id not present in context");
     }
 
-    // get body
-    const { title, text } = req.body as unknown as UpdateNoteRequest;
-
-    // create note payload
-    const payload: Partial<Note> = {
-      ...(title ? { title } : {}),
-      ...(text ? { text } : {}),
-    };
-
-    // if payload has anything to update, only then update
-    if (Object.keys(payload).length) {
-      /**
-       * update note
-       * NOTE: I can use returning:true here to return the updated note
-       * but this is known to cause issues with some SQL databases like mySQL
-       *
-       * Additional: Also note how user id is part of query, this is to ensure that user is not updating not from
-       * some other user
-       */
-      await NoteModel.update(payload, {
-        where: { id: req.params.noteId, ownerId: req.userId },
-        returning: true,
-      });
-    }
-
-    // get note
+    /**
+     * Get note using id and owner, note how user id is part of query,
+     * this is to ensure that user is not updating note from
+     * some other user
+     */
     const result = await NoteModel.findOne({
       where: { id: req.params.noteId, ownerId: req.userId },
     });
