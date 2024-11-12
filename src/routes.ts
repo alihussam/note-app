@@ -17,6 +17,8 @@ import { updateNoteRequestValidation } from "./modules/note/updateNote/updateNot
 import { updateNoteController } from "./modules/note/updateNote/updateNote.controller";
 import { getNoteRequestValidation } from "./modules/note/getNote/getNote.types";
 import { getNoteController } from "./modules/note/getNote/getNote.controller";
+import { getNotesRequestValidation } from "./modules/note/getNotes/getNotes.types";
+import { getNotesController } from "./modules/note/getNotes/getNotes.controller";
 
 const router = Router();
 
@@ -79,7 +81,17 @@ router.post(
 );
 
 /**
- * Create note controller
+ * get notes controller
+ */
+router.get(
+  "/notes",
+  accessTokenMiddleware,
+  validateMiddleware(getNotesRequestValidation),
+  getNotesController
+);
+
+/**
+ * get note controller
  */
 router.get(
   "/note/:noteId",
