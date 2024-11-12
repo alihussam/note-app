@@ -10,7 +10,7 @@
   "scripts": {
     "prebuild": "rimraf \"build\"",
     "build": "tsc",
-    "start": "node ./build/index.js",
+    "start": "env-cmd -f .env node ./build/src/index.js",
     "dev": "env-cmd -f .env.local ts-node-dev --respawn --transpile-only ./src/index.ts",
     "seed": "env-cmd -f .env.local ts-node-dev --respawn --transpile-only ./scripts/seedDb.ts"
   },
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/bcrypt": "5.0.2",
     "@types/express": "5.0.0",
+    "@types/jsonwebtoken": "9.0.7",
     "env-cmd": "10.1.0",
     "ts-node-dev": "2.0.0",
     "typescript": "5.6.3"
