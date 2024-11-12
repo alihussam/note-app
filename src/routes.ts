@@ -19,6 +19,8 @@ import { getNoteRequestValidation } from "./modules/note/getNote/getNote.types";
 import { getNoteController } from "./modules/note/getNote/getNote.controller";
 import { getNotesRequestValidation } from "./modules/note/getNotes/getNotes.types";
 import { getNotesController } from "./modules/note/getNotes/getNotes.controller";
+import { deleteNoteRequestValidation } from "./modules/note/deleteNote/deleteNote.types";
+import { deleteNoteController } from "./modules/note/deleteNote/deleteNote.controller";
 
 const router = Router();
 
@@ -108,6 +110,16 @@ router.put(
   accessTokenMiddleware,
   validateMiddleware(updateNoteRequestValidation),
   updateNoteController
+);
+
+/**
+ * Delete note controller
+ */
+router.delete(
+  "/note/:noteId",
+  accessTokenMiddleware,
+  validateMiddleware(deleteNoteRequestValidation),
+  deleteNoteController
 );
 
 export default router;
