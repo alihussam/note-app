@@ -1,12 +1,4 @@
-import {
-  CreationOptional,
-  DataTypes,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-  ModelDefined,
-  Optional,
-} from "sequelize";
+import { DataTypes, ModelDefined, Optional } from "sequelize";
 import bcrypt from "bcrypt";
 import { sequelizeConnection } from "../config";
 import { getEnvConfig } from "../utils/env.utils";

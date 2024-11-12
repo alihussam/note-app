@@ -4,6 +4,8 @@ import { CustomError } from "./libs/customError.lib";
 import validateMiddleware from "./middleware/validate.middleware";
 import { signupRequestValidation } from "./modules/auth/signup/signup.types";
 import { signupController } from "./modules/auth/signup/signup.controller";
+import { loginRequestValidation } from "./modules/auth/login/login.types";
+import { loginController } from "./modules/auth/login/login.controller";
 
 const router = Router();
 
@@ -39,6 +41,15 @@ router.post(
   "/signup",
   validateMiddleware(signupRequestValidation),
   signupController
+);
+
+/**
+ * Login user
+ */
+router.post(
+  "/login",
+  validateMiddleware(loginRequestValidation),
+  loginController
 );
 
 export default router;

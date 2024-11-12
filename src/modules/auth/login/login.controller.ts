@@ -1,21 +1,23 @@
 import { NextFunction, Request, Response } from "express";
-import { SignupRequest } from "./signup.types";
-import { User, UserModel } from "../../../models/user.model";
+import bcrypt from "bcrypt";
+import { cloneDeep } from "lodash";
+import { LoginRequest } from "./login.types";
+import { User } from "../../../models/user.model";
 import { generateTokenSet } from "../../../utils/jwt.utils";
 import { getEnvConfig } from "../../../utils/env.utils";
 import { sendSuccessResponse } from "../../../utils/response.utils";
-import { checkIfEmailExists } from "../../../services/user.services";
+import { getUserByEmail } from "../../../services/user.services";
 import { CustomError } from "../../../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 
 /**
- * Signup controller
+ * Login controller
  *
  * @param req - Request
  * @param res - Response
  * @param next - Next middlewarw
  */
-export const signupController = async (
+export const loginController = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -25,30 +27,39 @@ export const signupController = async (
     const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = getEnvConfig();
 
     // get body
-    const { name, email, password } = req.body as unknown as SignupRequest;
+    const { email, password } = req.body as unknown as LoginRequest;
 
-    // before creating check if user exists
-    const isExistingUser = await checkIfEmailExists(email);
-    if (isExistingUser) {
+    // get user
+    const user = await getUserByEmail(email);
+
+    // if user is not found, throw error
+    if (!user) {
       throw new CustomError({
-        message: "User with this email already exists",
-        statusCode: StatusCodes.BAD_REQUEST,
+        message: "Invalid login credentials",
+        statusCode: StatusCodes.UNAUTHORIZED,
       });
     }
 
-    // create user
-    const user = await UserModel.create({ name, email, password });
+    // compare password with hashed password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    const userPlain = user.toJSON() as Omit<User, "password"> & {
+    if (!isPasswordValid) {
+      throw new CustomError({
+        message: "Invalid login credentials",
+        statusCode: StatusCodes.UNAUTHORIZED,
+      });
+    }
+
+    const userPlain = cloneDeep(user) as Omit<User, "password"> & {
       password?: string;
-    }; // convert to plain object
+    };
 
     // delete user password
     delete userPlain.password;
 
     // generate access and refresh JWT tokens
     const { accessToken, refreshToken } = generateTokenSet({
-      userId: userPlain.id,
+      userId: user.id,
       accessSecret: ACCESS_TOKEN_SECRET,
       refreshSecret: REFRESH_TOKEN_SECRET,
     });
@@ -58,7 +69,7 @@ export const signupController = async (
       data: {
         accessToken,
         refreshToken,
-        user: userPlain,
+        user,
       },
     });
   } catch (error) {
