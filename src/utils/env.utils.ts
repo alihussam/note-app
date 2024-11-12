@@ -1,4 +1,4 @@
-import Joi from "joi";
+import { Joi } from "express-validation";
 
 export enum Environment {
   DEVELOPMENT = "development",
@@ -12,7 +12,8 @@ export interface EnvConfig {
   NODE_ENV: Environment;
   PORT: number;
   ROUTE_PREFIX: string;
-  JWT_SECRET: string;
+  ACCESS_TOKEN_SECRET: string;
+  REFRESH_TOKEN_SECRET: string;
   PASSWORD_HASH_ROUNDS: number;
 }
 
@@ -27,7 +28,8 @@ const envConfigValidation = Joi.object({
     .required(),
   PORT: Joi.number().required(),
   ROUTE_PREFIX: Joi.string().optional().default("/"),
-  JWT_SECRET: Joi.string().required(),
+  ACCESS_TOKEN_SECRET: Joi.string().required(),
+  REFRESH_TOKEN_SECRET: Joi.string().required(),
   PASSWORD_HASH_ROUNDS: Joi.number().default(10),
 }).unknown(true); // allow unknown keys
 

@@ -12,7 +12,8 @@ fi
 docker run \
     -p $PORT:$PORT \
     -v ./database.sqlite3:/usr/src/app/database.sqlite3 \
-    -e JWT_SECRET=$JWT_SECRET \
+    -e ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET \
+    -e REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET \
     -d \
     --name respond-app \
     respond:latest

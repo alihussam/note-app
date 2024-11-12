@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ValidationError as ExpressValidationError } from 'express-validation';
 import { CustomError } from "../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 import { getEnvConfig, isDevMode } from "../utils/env.utils";
@@ -17,6 +18,23 @@ export const errorRequestMiddleware = (
 ) => {
   const { NODE_ENV } = getEnvConfig();
   let finalError = err;
+
+  /* Validation Error */
+  if (finalError instanceof ExpressValidationError) {
+    /**
+     * Handling on flattened validation error
+     * make sure to use custom validation middleware in middleware dir
+     * or to set keyByField to true if using validate middleware directly
+     * or change this handling to handle detailed Validation error
+     * See: https://www.npmjs.com/package/express-validation
+     */
+    // deep clone whole error
+    finalError = new CustomError({
+      message: "API validation failed",
+      statusCode: StatusCodes.BAD_REQUEST,
+      meta: finalError.details,
+    });
+  }
 
   /* Unexpected Error */
   if (!(finalError instanceof CustomError)) {

@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "./libs/customError.lib";
+import validateMiddleware from "./middleware/validate.middleware";
+import { signupRequestValidation } from "./modules/auth/signup/signup.types";
+import { signupController } from "./modules/auth/signup/signup.controller";
 
 const router = Router();
 
@@ -28,5 +31,14 @@ router.get("/check-error", (req, res, next) => {
     next(error);
   }
 });
+
+/**
+ * Signup user
+ */
+router.post(
+  "/signup",
+  validateMiddleware(signupRequestValidation),
+  signupController
+);
 
 export default router;
