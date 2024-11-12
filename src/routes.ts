@@ -6,6 +6,8 @@ import { signupRequestValidation } from "./modules/auth/signup/signup.types";
 import { signupController } from "./modules/auth/signup/signup.controller";
 import { loginRequestValidation } from "./modules/auth/login/login.types";
 import { loginController } from "./modules/auth/login/login.controller";
+import { refreshTokenMiddleware } from "./middleware/authenticate.middleware";
+import { refreshTokenController } from "./modules/auth/refreshToken/refreshToken.controller";
 
 const router = Router();
 
@@ -51,5 +53,10 @@ router.post(
   validateMiddleware(loginRequestValidation),
   loginController
 );
+
+/**
+ * Refresh token user
+ */
+router.get("/refreshToken", refreshTokenMiddleware, refreshTokenController);
 
 export default router;
