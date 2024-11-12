@@ -6,8 +6,13 @@ import { signupRequestValidation } from "./modules/auth/signup/signup.types";
 import { signupController } from "./modules/auth/signup/signup.controller";
 import { loginRequestValidation } from "./modules/auth/login/login.types";
 import { loginController } from "./modules/auth/login/login.controller";
-import { refreshTokenMiddleware } from "./middleware/authenticate.middleware";
+import {
+  accessTokenMiddleware,
+  refreshTokenMiddleware,
+} from "./middleware/authenticate.middleware";
 import { refreshTokenController } from "./modules/auth/refreshToken/refreshToken.controller";
+import { createNoteRequestValidation } from "./modules/note/createNote/createNote.types";
+import { createNoteController } from "./modules/note/createNote/createNote.controller";
 
 const router = Router();
 
@@ -58,5 +63,15 @@ router.post(
  * Refresh token user
  */
 router.get("/refreshToken", refreshTokenMiddleware, refreshTokenController);
+
+/**
+ * Create note controller
+ */
+router.post(
+  "/note",
+  accessTokenMiddleware,
+  validateMiddleware(createNoteRequestValidation),
+  createNoteController
+);
 
 export default router;
