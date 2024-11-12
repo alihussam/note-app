@@ -13,6 +13,8 @@ import {
 import { refreshTokenController } from "./modules/auth/refreshToken/refreshToken.controller";
 import { createNoteRequestValidation } from "./modules/note/createNote/createNote.types";
 import { createNoteController } from "./modules/note/createNote/createNote.controller";
+import { updateNoteRequestValidation } from "./modules/note/updateNote/updateNote.types";
+import { updateNoteController } from "./modules/note/updateNote/updateNote.controller";
 
 const router = Router();
 
@@ -72,6 +74,16 @@ router.post(
   accessTokenMiddleware,
   validateMiddleware(createNoteRequestValidation),
   createNoteController
+);
+
+/**
+ * Update note controller
+ */
+router.put(
+  "/note/:noteId",
+  accessTokenMiddleware,
+  validateMiddleware(updateNoteRequestValidation),
+  updateNoteController
 );
 
 export default router;
