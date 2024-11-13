@@ -15,6 +15,9 @@ export interface EnvConfig {
   ACCESS_TOKEN_SECRET: string;
   REFRESH_TOKEN_SECRET: string;
   PASSWORD_HASH_ROUNDS: number;
+  REDIS_HOST: string;
+  REDIS_PORT: number;
+  REDIS_PASSWORD: string;
 }
 
 let envConfig: EnvConfig;
@@ -31,6 +34,9 @@ const envConfigValidation = Joi.object({
   ACCESS_TOKEN_SECRET: Joi.string().required(),
   REFRESH_TOKEN_SECRET: Joi.string().required(),
   PASSWORD_HASH_ROUNDS: Joi.number().default(10),
+  REDIS_HOST: Joi.string().required(),
+  REDIS_PORT: Joi.number().required(),
+  REDIS_PASSWORD: Joi.string().optional(),
 }).unknown(true); // allow unknown keys
 
 /**

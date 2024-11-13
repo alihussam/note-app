@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { sendSuccessResponse } from "../../../utils/response.utils";
 import { CreateNoteRequest } from "./createNote.types";
 import { Note, NoteModel } from "../../../models/note.model";
+import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
 
 /**
  * Create note controller
@@ -35,6 +36,13 @@ export const createNoteController = async (
 
     // create note
     const result = await NoteModel.create(payload);
+
+    // try to invalidatate cache
+    try {
+      await deleteRedisCacheByPattern(`notes:${req.userId}:*`);
+    } catch (error) {
+      console.error("Error invalidating cache", error);
+    }
 
     // plain
     const plain = result.toJSON() as Note;

@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { sendSuccessResponse } from "../../../utils/response.utils";
-import { Note, NoteModel } from "../../../models/note.model";
-import { CustomError } from "../../../libs/customError.lib";
-import { StatusCodes } from "http-status-codes";
+import { NoteModel } from "../../../models/note.model";
 import { DEFAULT_PAGE_LIMIT, GetNotesQuery } from "./getNotes.types";
+import { redis } from "../../../libs/redis.lib";
 
 /**
  * Get notes controller
@@ -30,6 +29,20 @@ export const getNotesController = async (
 
     const offset: number = (Number(page) - 1) * Number(limit); // Calculate offset
 
+    // create a cache key
+    const cacheKey = `notes:${req.userId}:${offset}:${limit}`; // Key for caching
+    const cacheResult = await redis.get(cacheKey);
+
+    // if cached notes found
+    if (cacheResult) {
+      console.log("Cache hit with key", cacheKey);
+      sendSuccessResponse({
+        res,
+        data: JSON.parse(cacheResult),
+      });
+      return;
+    }
+
     // get paginated notes
     const { count, rows } = await NoteModel.findAndCountAll({
       where: { ownerId: req.userId },
@@ -39,15 +52,20 @@ export const getNotesController = async (
 
     const totalPages = Math.ceil(count / limit); // Calculate total pages
 
+    const response = {
+      // sending model since it will auto call models toJSON when sending in response
+      docs: rows,
+      limit,
+      page,
+      totalPages,
+    };
+
+    // cache response
+    await redis.set(cacheKey, JSON.stringify(response), "EX", 3600); // Cache for 1 hour
+
     sendSuccessResponse({
       res,
-      data: {
-        // sending model since it will auto call models toJSON when sending in response
-        docs: rows,
-        limit,
-        page,
-        totalPages,
-      },
+      data: response,
     });
   } catch (error) {
     next(error);

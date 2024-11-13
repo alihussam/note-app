@@ -4,6 +4,7 @@ import { Note, NoteModel } from "../../../models/note.model";
 import { UpdateNoteRequest } from "./updateNote.types";
 import { CustomError } from "../../../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
+import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
 
 /**
  * Update note controller
@@ -65,6 +66,13 @@ export const updateNoteController = async (
         message: "Note not found",
         statusCode: StatusCodes.NOT_FOUND,
       });
+    }
+
+    // try to invalidatate cache
+    try {
+      await deleteRedisCacheByPattern(`notes:${req.userId}:*`);
+    } catch (error) {
+      console.error("Error invalidating cache", error);
     }
 
     // plain

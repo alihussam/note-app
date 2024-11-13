@@ -14,6 +14,7 @@ docker run \
     -v ./database.sqlite3:/usr/src/app/database.sqlite3 \
     -e ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET \
     -e REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET \
+    -e REDIS_PASSWORD=$REDIS_PASSWORD \
     -d \
     --name respond-app \
     respond:latest
