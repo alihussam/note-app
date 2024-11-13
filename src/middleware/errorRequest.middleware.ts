@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ValidationError as ExpressValidationError } from 'express-validation';
+import { ValidationError as ExpressValidationError } from "express-validation";
 import { CustomError } from "../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 import { getEnvConfig, isDevMode } from "../utils/env.utils";
@@ -18,6 +18,9 @@ export const errorRequestMiddleware = (
 ) => {
   const { NODE_ENV } = getEnvConfig();
   let finalError = err;
+
+  // log error
+  console.error("Error in API", err);
 
   /* Validation Error */
   if (finalError instanceof ExpressValidationError) {

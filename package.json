@@ -10,7 +10,7 @@
   "scripts": {
     "prebuild": "rimraf \"build\"",
     "build": "tsc",
-    "start": "env-cmd -f .env node ./build/src/index.js",
+    "start": "node ./build/src/index.js",
     "dev": "env-cmd -f .env.local ts-node-dev --respawn --transpile-only ./src/index.ts",
     "seed": "env-cmd -f .env.local ts-node-dev --respawn --transpile-only ./scripts/seedDb.ts"
   },
@@ -21,6 +21,7 @@
     "express": "4.21.1",
     "express-validation": "4.1.1",
     "http-status-codes": "2.3.0",
+    "ioredis": "5.4.1",
     "jsonwebtoken": "9.0.2",
     "lodash": "4.17.21",
     "moment": "2.30.1",

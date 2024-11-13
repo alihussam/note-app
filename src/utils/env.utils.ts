@@ -36,7 +36,7 @@ const envConfigValidation = Joi.object({
   PASSWORD_HASH_ROUNDS: Joi.number().default(10),
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
-  REDIS_PASSWORD: Joi.string().optional(),
+  REDIS_PASSWORD: Joi.string().optional().allow(''),
 }).unknown(true); // allow unknown keys
 
 /**
