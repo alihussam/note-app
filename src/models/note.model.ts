@@ -4,11 +4,18 @@ import { sequelizeConnection } from "../config";
 export const NOTE_MODEL_NAME = "Note";
 export const NOTES_COLLECTION = "notes";
 
+export enum NoteType {
+  WORK = "work",
+  PERSONAL = "personal",
+}
+
 export interface Note {
   id: number;
   title: string;
   text: string;
   ownerId: number;
+  type: NoteType;
+  shouldTrack?: boolean;
 }
 
 type NoteCreationAttributes = Optional<Note, "id">;
@@ -30,6 +37,14 @@ const NoteModel: ModelDefined<Note, NoteCreationAttributes> =
       text: {
         type: new DataTypes.TEXT(),
         allowNull: false,
+      },
+      type: {
+        type: DataTypes.ENUM(...Object.values(NoteType)),
+        allowNull: false,
+      },
+      shouldTrack: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {

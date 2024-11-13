@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { sendSuccessResponse } from "../../../utils/response.utils";
 import { CreateNoteRequest } from "./createNote.types";
-import { Note, NoteModel } from "../../../models/note.model";
 import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
 import Logger from "../../../libs/logger.lib";
+import { NoteFactory } from "../../../factories/note.factory";
+import { NoteType } from "../../../models/note.model";
 
 /**
  * Create note controller
@@ -26,17 +27,19 @@ export const createNoteController = async (
     }
 
     // get body
-    const { title, text } = req.body as unknown as CreateNoteRequest;
+    const {
+      title,
+      text,
+      type = NoteType.WORK,
+    } = req.body as unknown as CreateNoteRequest;
 
-    // create note payload
-    const payload: Omit<Note, "id"> = {
+    // create note using factor
+    const result = await NoteFactory.createNote({
+      type,
       title,
       text,
       ownerId: req.userId,
-    };
-
-    // create note
-    const result = await NoteModel.create(payload);
+    });
 
     // try to invalidatate cache
     try {
@@ -45,13 +48,10 @@ export const createNoteController = async (
       Logger.getInstance().error("Error invalidating cache", error);
     }
 
-    // plain
-    const plain = result.toJSON() as Note;
-
     sendSuccessResponse({
       res,
       data: {
-        note: plain,
+        note: result,
       },
     });
   } catch (error) {
