@@ -1,4 +1,5 @@
 import { Joi } from "express-validation";
+import Logger from "../libs/logger.lib";
 
 export enum Environment {
   DEVELOPMENT = "development",
@@ -36,7 +37,7 @@ const envConfigValidation = Joi.object({
   PASSWORD_HASH_ROUNDS: Joi.number().default(10),
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
-  REDIS_PASSWORD: Joi.string().optional().allow(''),
+  REDIS_PASSWORD: Joi.string().optional().allow(""),
 }).unknown(true); // allow unknown keys
 
 /**
@@ -45,7 +46,7 @@ const envConfigValidation = Joi.object({
  */
 const { error, value } = envConfigValidation.validate(process.env);
 if (error) {
-  console.error("Env config is not valid for project", error);
+  Logger.getInstance().error("Env config is not valid for project", error);
   throw new Error(
     "Env config is not valid for project. Server might not run properly"
   );

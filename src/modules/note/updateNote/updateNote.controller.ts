@@ -5,6 +5,7 @@ import { UpdateNoteRequest } from "./updateNote.types";
 import { CustomError } from "../../../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
+import Logger from "@/src/libs/logger.lib";
 
 /**
  * Update note controller
@@ -72,7 +73,7 @@ export const updateNoteController = async (
     try {
       await deleteRedisCacheByPattern(`notes:${req.userId}:*`);
     } catch (error) {
-      console.error("Error invalidating cache", error);
+      Logger.getInstance().error("Error invalidating cache", error);
     }
 
     // plain

@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import Logger from "../libs/logger.lib";
 
 /**
  * Request logging middleware
@@ -13,6 +14,6 @@ export const requestLoggerMiddleware = (
   next: NextFunction
 ) => {
   const requestTime = new Date(Date.now()).toString();
-  console.log(req.method, req.hostname, req.path, requestTime);
+  Logger.getInstance().log(req.method, req.hostname, req.path, requestTime);
   next();
 };

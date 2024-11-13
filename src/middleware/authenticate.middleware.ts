@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 import { getEnvConfig } from "../utils/env.utils";
 import { TokenPayload } from "../types/jwt.type";
+import Logger from "../libs/logger.lib";
 
 /**
  * Auth middleware
@@ -39,7 +40,7 @@ const authenticateMiddleware =
       }
 
       // log and return unauth
-      console.error("Exception at auth", error);
+      Logger.getInstance().error("Exception at auth", error);
 
       next(
         new CustomError({

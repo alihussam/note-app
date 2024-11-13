@@ -3,6 +3,7 @@ import { sendSuccessResponse } from "../../../utils/response.utils";
 import { CreateNoteRequest } from "./createNote.types";
 import { Note, NoteModel } from "../../../models/note.model";
 import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
+import Logger from "@/src/libs/logger.lib";
 
 /**
  * Create note controller
@@ -41,7 +42,7 @@ export const createNoteController = async (
     try {
       await deleteRedisCacheByPattern(`notes:${req.userId}:*`);
     } catch (error) {
-      console.error("Error invalidating cache", error);
+      Logger.getInstance().error("Error invalidating cache", error);
     }
 
     // plain

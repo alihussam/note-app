@@ -1,6 +1,7 @@
 // redisClient.ts
 import Redis from "ioredis";
 import { getEnvConfig } from "../utils/env.utils";
+import Logger from "./logger.lib";
 
 const { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } = getEnvConfig();
 
@@ -26,7 +27,7 @@ export const deleteRedisCacheByPattern = async (
     // get matched keys and delete
     const keys = result[1];
     if (keys.length) {
-      console.log("Deleting keys", ...keys);
+      Logger.getInstance().info("Deleting keys", ...keys);
       await redis.del(...keys);
     }
 

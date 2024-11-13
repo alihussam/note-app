@@ -1,3 +1,4 @@
+import Logger from "../src/libs/logger.lib";
 import { associateModels } from "../src/models/modelAssociations";
 import { NoteModel } from "../src/models/note.model";
 import { UserModel } from "../src/models/user.model";
@@ -35,7 +36,7 @@ async function seed() {
     ownerId: 1,
   });
 
-  console.log("Seed done");
+  Logger.getInstance().info("Seed done");
 }
 
 /* WARNING THIS WILL DROP THE CURRENT DATABASE */

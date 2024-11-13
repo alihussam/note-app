@@ -3,6 +3,7 @@ import { ValidationError as ExpressValidationError } from "express-validation";
 import { CustomError } from "../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 import { getEnvConfig, isDevMode } from "../utils/env.utils";
+import Logger from "../libs/logger.lib";
 
 /**
  * Global express error request handler
@@ -20,7 +21,7 @@ export const errorRequestMiddleware = (
   let finalError = err;
 
   // log error
-  console.error("Error in API", err);
+  Logger.getInstance().error("Error in API", err);
 
   /* Validation Error */
   if (finalError instanceof ExpressValidationError) {

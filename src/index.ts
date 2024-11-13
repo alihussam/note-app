@@ -1,4 +1,7 @@
 import { expressApp } from "./app";
+import Logger from "./libs/logger.lib";
+
+const logger = Logger.getInstance();
 
 /**
  * Init server
@@ -8,10 +11,10 @@ async function initServer() {
     const PORT = process.env.PORT || 3000;
 
     expressApp.listen(PORT, () => {
-      console.log(`Note App Listening on Port ${PORT}`);
+      logger.info(`Note App Listening on Port ${PORT}`);
     });
   } catch (error) {
-    console.error(`An error occurred: ${JSON.stringify(error)}`);
+    logger.error(`An error occurred: ${JSON.stringify(error)}`);
     process.exit(1);
   }
 }
@@ -20,21 +23,21 @@ async function initServer() {
  * Bind uncaught exception handler
  */
 process.on("uncaughtException", (error) => {
-  console.error("Uncaught exception error", JSON.stringify(error));
+  logger.error("Uncaught exception error", JSON.stringify(error));
 });
 
 /**
  * Bind un-handled promise rejection handler
  */
 process.on("unhandledRejection", (reason, promise) => {
-  console.error("Unhandled promise rejection", reason);
+  logger.error("Unhandled promise rejection", reason);
 });
 
 /**
  * Bind interrupt signal handler for graceful termination
  */
 process.on("SIGINT", () => {
-  console.log(`Service gracefully terminated`);
+  logger.info(`Service gracefully terminated`);
   process.exit(0);
 });
 
