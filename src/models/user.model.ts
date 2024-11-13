@@ -47,6 +47,12 @@ const UserModel: ModelDefined<User, UserCreationAttributes> =
       timestamps: true,
       tableName: USERS_COLLECTION,
       modelName: USER_MODEL_NAME,
+      indexes: [
+        {
+          unique: true,
+          fields: ["email"],
+        },
+      ],
       hooks: {
         // has password before create and update
         beforeCreate: (user: any) => {

@@ -51,6 +51,13 @@ const NoteModel: ModelDefined<Note, NoteCreationAttributes> =
       timestamps: true,
       tableName: NOTES_COLLECTION,
       modelName: NOTE_MODEL_NAME,
+      indexes: [
+        // for fetching notes
+        // keeping owner id as primary since need to fetch all notes by owner as well
+        {
+          fields: ["ownerId", "id"],
+        },
+      ],
     }
   );
 
