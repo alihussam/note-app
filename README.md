@@ -11,4 +11,4 @@ to get context on what envs will be required
 
 1. To start app in development mode run `npm run dev` command
 
-2. To start app in docker container run `docker compose --env-file .env.local up --build;`
+2. To start app in docker container run `docker compose --env-file .env.local up --build`

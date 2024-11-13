@@ -3,7 +3,7 @@ import { sendSuccessResponse } from "../../../utils/response.utils";
 import { NoteModel } from "../../../models/note.model";
 import { DEFAULT_PAGE_LIMIT, GetNotesQuery } from "./getNotes.types";
 import { redis } from "../../../libs/redis.lib";
-import Logger from "@/src/libs/logger.lib";
+import Logger from "../../../libs/logger.lib";
 
 /**
  * Get notes controller

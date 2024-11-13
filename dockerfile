@@ -16,7 +16,6 @@ COPY --chown=node:node . .
 # RUN npm run build
 
 FROM node:$BASE_IMG AS runner
-COPY --from=builder /usr/app/entrypoint.sh /usr/app/entrypoint.sh
 COPY --from=builder /usr/app/node_modules /usr/app/node_modules
 COPY --from=builder /usr/app/package.json /usr/app/package.json
 COPY --from=builder /usr/app/.env.sample /usr/app/.env.sample

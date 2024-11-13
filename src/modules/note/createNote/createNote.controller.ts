@@ -3,7 +3,7 @@ import { sendSuccessResponse } from "../../../utils/response.utils";
 import { CreateNoteRequest } from "./createNote.types";
 import { Note, NoteModel } from "../../../models/note.model";
 import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
-import Logger from "@/src/libs/logger.lib";
+import Logger from "../../../libs/logger.lib";
 
 /**
  * Create note controller

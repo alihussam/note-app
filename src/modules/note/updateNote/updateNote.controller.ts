@@ -5,7 +5,7 @@ import { UpdateNoteRequest } from "./updateNote.types";
 import { CustomError } from "../../../libs/customError.lib";
 import { StatusCodes } from "http-status-codes";
 import { deleteRedisCacheByPattern } from "../../../libs/redis.lib";
-import Logger from "@/src/libs/logger.lib";
+import Logger from "../../../libs/logger.lib";
 
 /**
  * Update note controller

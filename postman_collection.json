@@ -1,0 +1,923 @@
+{
+	"info": {
+		"_postman_id": "185ad881-3a2d-4aee-9660-067120bd7aaf",
+		"name": "Note App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39302267"
+	},
+	"item": [
+		{
+			"name": "Health check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": "{{HOST}}/respond/health-check"
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Ali\",\n    \"email\": \"contact.alihussam+124@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/respond/signup"
+			},
+			"response": [
+				{
+					"name": "Signup User Already Exist",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ali\",\n    \"email\": \"contact.alihussam@gmail.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/signup"
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "358"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"166-0v0h8WrhCuzab8pa+vn+5PqdiII\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 00:57:27 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"User with this email already exists\",\n    \"meta\": {},\n    \"stack\": \"CustomError: User with this email already exists\\n    at /Users/ali/Development/respond/src/modules/auth/signup/signup.controller.ts:33:13\\n    at Generator.next (<anonymous>)\\n    at fulfilled (/Users/ali/Development/respond/src/modules/auth/signup/signup.controller.ts:5:58)\"\n}"
+				},
+				{
+					"name": "Signup Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ali\",\n    \"email\": \"contact.alihussam+123@gmail.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/signup"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "480"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1e0-7ri6exVujtzEikXFGR7L+moxh6o\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:14:12 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczMTM3NDA1MiwiZXhwIjoxNzMxMzc0OTUyfQ.mGiJLevfPuQr-q70GCrRTCuKApnOBqmcrYlJsRx0RVs\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTczMTM3NDA1MiwiZXhwIjoxNzMxOTc4ODUyfQ.l__OuQWe65OyFLfonn80tb7Wk98-7ok1S_FUsglAJJE\",\n        \"user\": {\n            \"id\": 4,\n            \"name\": \"Ali\",\n            \"email\": \"contact.alihussam+123@gmail.com\",\n            \"updatedAt\": \"2024-11-12T01:14:12.532Z\",\n            \"createdAt\": \"2024-11-12T01:14:12.532Z\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"contact.alihussam+124@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/respond/login"
+			},
+			"response": [
+				{
+					"name": "Login Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"contact.alihussam@gmail.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/login"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "550"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"226-5eaauO+zjMRlTrPE5w884xIjlEw\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:14:42 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTczMTM3NDA4MiwiZXhwIjoxNzMxMzc0OTgyfQ.16swL2Kf_NBoGHAl5tKmtFkAxHUUlUxa1hXcpVMUmcs\",\n        \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTczMTM3NDA4MiwiZXhwIjoxNzMxOTc4ODgyfQ.KN790pwHS-jFejmIqcNaerhh148hs7pF5ndSl5nCGx8\",\n        \"user\": {\n            \"id\": 3,\n            \"name\": \"Ali\",\n            \"email\": \"contact.alihussam@gmail.com\",\n            \"password\": \"$2b$10$ajRaf5V9i6OIP57Oc1WmKevriyzNAIAUqDUJKXm94JMnDBJkFMPhC\",\n            \"createdAt\": \"2024-11-12T00:56:40.335Z\",\n            \"updatedAt\": \"2024-11-12T00:56:40.335Z\"\n        }\n    }\n}"
+				},
+				{
+					"name": "Login Failed",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"contact.alihussam@gmail.com\",\n    \"password\": \"12345679\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/login"
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "334"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"14e-G2qvmCmKG/VNBMNcdiz0Hl2osmk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:15:18 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Invalid login credentials\",\n    \"meta\": {},\n    \"stack\": \"CustomError: Invalid login credentials\\n    at /Users/ali/Development/respond/src/modules/auth/login/login.controller.ts:47:13\\n    at Generator.next (<anonymous>)\\n    at fulfilled (/Users/ali/Development/respond/src/modules/auth/login/login.controller.ts:5:58)\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Check error",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": "{{HOST}}/respond/check-error"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Note",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"First note\",\n    \"text\": \"This is first note on app\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/respond/note"
+			},
+			"response": [
+				{
+					"name": "Create Note Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"First note\",\n    \"text\": \"This is first note on app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/note"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "172"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ac-OMBKwIzmeWGFae2+fR66I9AnbZY\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:42:24 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"note\": {\n            \"id\": 4,\n            \"title\": \"First note\",\n            \"text\": \"This is first note on app\",\n            \"ownerId\": 3,\n            \"updatedAt\": \"2024-11-12T01:42:24.239Z\",\n            \"createdAt\": \"2024-11-12T01:42:24.239Z\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Note",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"First note\",\n    \"text\": \"This is first note on app\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/respond/note/1"
+			},
+			"response": [
+				{
+					"name": "Get Note Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"First note\",\n    \"text\": \"This is first note on app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/note/4"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "193"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c1-zPQdstxCNjuCyNQvQnQvj1XTPZQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 02:05:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"note\": {\n            \"id\": 4,\n            \"title\": \"First note updated without text\",\n            \"text\": \"This is first note on app\",\n            \"createdAt\": \"2024-11-12T01:42:24.239Z\",\n            \"updatedAt\": \"2024-11-12T01:56:15.307Z\",\n            \"ownerId\": 3\n        }\n    }\n}"
+				},
+				{
+					"name": "Get Note Failure",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"First note\",\n    \"text\": \"This is first note on app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/note/100"
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "320"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"140-CXd79e1Npigtv0XsFbW10WuaGQM\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 02:05:30 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Note not found\",\n    \"meta\": {},\n    \"stack\": \"CustomError: Note not found\\n    at /Users/ali/Development/respond/src/modules/note/getNote/getNote.controller.ts:42:13\\n    at Generator.next (<anonymous>)\\n    at fulfilled (/Users/ali/Development/respond/src/modules/note/getNote/getNote.controller.ts:5:58)\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Notes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/respond/notes?limit=2",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"respond",
+						"notes"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Notes Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": "{{HOST}}/respond/notes"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "832"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"340-vDrSB3NZfCxDs/2mrW/SY1AVwVU\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 03:01:40 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"docs\": [\n            {\n                \"id\": 3,\n                \"title\": \"First note\",\n                \"text\": \"This is first note on app\",\n                \"createdAt\": \"2024-11-12T01:42:10.938Z\",\n                \"updatedAt\": \"2024-11-12T01:42:10.938Z\",\n                \"ownerId\": 3\n            },\n            {\n                \"id\": 4,\n                \"title\": \"First note updated without text\",\n                \"text\": \"This is first note on app\",\n                \"createdAt\": \"2024-11-12T01:42:24.239Z\",\n                \"updatedAt\": \"2024-11-12T01:56:15.307Z\",\n                \"ownerId\": 3\n            },\n            {\n                \"id\": 5,\n                \"title\": \"First note\",\n                \"text\": \"This is first note on app\",\n                \"createdAt\": \"2024-11-12T01:55:49.782Z\",\n                \"updatedAt\": \"2024-11-12T01:55:49.782Z\",\n                \"ownerId\": 3\n            },\n            {\n                \"id\": 7,\n                \"title\": \"Note 1\",\n                \"text\": \"note text 1\",\n                \"createdAt\": \"2024-11-12T02:20:11.427Z\",\n                \"updatedAt\": \"2024-11-12T02:20:11.427Z\",\n                \"ownerId\": 3\n            },\n            {\n                \"id\": 9,\n                \"title\": \"First note\",\n                \"text\": \"This is first note on app\",\n                \"createdAt\": \"2024-11-12T02:59:25.583Z\",\n                \"updatedAt\": \"2024-11-12T02:59:25.583Z\",\n                \"ownerId\": 3\n            }\n        ],\n        \"limit\": 10,\n        \"page\": 1,\n        \"totalPages\": 1\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Note",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"First note updated without text\",\n    \"text\": \"This is first note on app\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{HOST}}/respond/note/100"
+			},
+			"response": [
+				{
+					"name": "Update Note success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"First note updated without text\",\n    \"text\": \"This is first note on app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/note/4"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "193"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"c1-zPQdstxCNjuCyNQvQnQvj1XTPZQ\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:56:15 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"note\": {\n            \"id\": 4,\n            \"title\": \"First note updated without text\",\n            \"text\": \"This is first note on app\",\n            \"createdAt\": \"2024-11-12T01:42:24.239Z\",\n            \"updatedAt\": \"2024-11-12T01:56:15.307Z\",\n            \"ownerId\": 3\n        }\n    }\n}"
+				},
+				{
+					"name": "Update Note Error",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{ACCESS_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"First note updated without text\",\n    \"text\": \"This is first note on app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/respond/note/100"
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "332"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"14c-Bq20D9ivpOvWQwCnLpQlMGeOZm8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:56:37 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Note not found\",\n    \"meta\": {},\n    \"stack\": \"CustomError: Note not found\\n    at /Users/ali/Development/respond/src/modules/note/updateNote/updateNote.controller.ts:59:13\\n    at Generator.next (<anonymous>)\\n    at fulfilled (/Users/ali/Development/respond/src/modules/note/updateNote/updateNote.controller.ts:5:58)\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Refresh token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": "{{HOST}}/respond/refreshToken"
+			},
+			"response": [
+				{
+					"name": "Refresh token failure",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": "{{HOST}}/respond/refreshToken"
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1170"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"492-y0v9y4wEpaorYBGfDJ0Mpxbr3/Y\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:30:32 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"User not authorized\",\n    \"meta\": {},\n    \"stack\": \"CustomError: User not authorized\\n    at /Users/ali/Development/respond/src/middleware/authenticate.middleware.ts:45:9\\n    at Layer.handle [as handle_request] (/Users/ali/Development/respond/node_modules/express/lib/router/layer.js:95:5)\\n    at next (/Users/ali/Development/respond/node_modules/express/lib/router/route.js:149:13)\\n    at Route.dispatch (/Users/ali/Development/respond/node_modules/express/lib/router/route.js:119:3)\\n    at Layer.handle [as handle_request] (/Users/ali/Development/respond/node_modules/express/lib/router/layer.js:95:5)\\n    at /Users/ali/Development/respond/node_modules/express/lib/router/index.js:284:15\\n    at Function.process_params (/Users/ali/Development/respond/node_modules/express/lib/router/index.js:346:12)\\n    at next (/Users/ali/Development/respond/node_modules/express/lib/router/index.js:280:10)\\n    at Function.handle (/Users/ali/Development/respond/node_modules/express/lib/router/index.js:175:3)\\n    at router (/Users/ali/Development/respond/node_modules/express/lib/router/index.js:47:12)\"\n}"
+				},
+				{
+					"name": "Refresh token success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": "{{HOST}}/respond/refreshToken"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "170"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"aa-c3BWjl+QinCto7Vh4cbE8pRX9s8\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 12 Nov 2024 01:30:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTczMTM3NTA1OSwiZXhwIjoxNzMxMzc1OTU5fQ.JDVr6p4tFuL8uWjm5uoyZ7ZxBazWO5-gmL39SUlB_Ao\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMTQ3NDgwOSwiZXhwIjoxNzMyMDc5NjA5fQ.fV5sViqxuS1zong6w4zg1iKDe7T93-S5470xkdHnZaQ",
+			"type": "string"
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczMTQ3NTk5MCwiZXhwIjoxNzMxNDc2ODkwfQ.L6oPcGUxxfgsTOX8-x4gDaW6i57AZ8zJO5PYJrRo3yQ",
+			"type": "string"
+		}
+	]
+}
